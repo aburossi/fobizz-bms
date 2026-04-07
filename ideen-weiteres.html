@@ -43,6 +43,10 @@ body{
   page-break-after:always;
   break-after:page;
 }
+.page:last-of-type{
+  page-break-after:auto;
+  break-after:auto;
+}
 
 /* ── Header ── */
 .pg-header{
@@ -201,7 +205,31 @@ body{
 @media print{
   body{background:#fff}
   .print-bar{display:none}
-  .page{margin:0;box-shadow:none}
+  .page{margin:0;box-shadow:none;padding:11mm 12mm 12mm}
+  .pg-header{padding-bottom:2.2mm;margin-bottom:4mm}
+  .pg-header-left .super{font-size:7.6pt}
+  .pg-header-left .title{font-size:13pt}
+  .pg-header-right{font-size:7.6pt;line-height:1.5}
+  .intro{font-size:8.4pt;line-height:1.45;margin-bottom:3.5mm;padding-left:3mm}
+  .idea{margin-bottom:2.8mm}
+  .idea-head{padding:2.2mm 3mm 2.2mm 2.4mm;grid-template-columns:32px 1fr auto}
+  .idea-letter{font-size:15pt;padding-right:2.2mm}
+  .idea-meta .idea-title{font-size:9.6pt}
+  .idea-meta .idea-sub{font-size:7.6pt}
+  .idea-col{padding:2.2mm 3mm}
+  .col-label{font-size:7.1pt;margin-bottom:1.2mm}
+  .col-steps{gap:.9mm}
+  .col-steps li{font-size:7.8pt;line-height:1.35;grid-template-columns:14px 1fr;gap:1.5mm}
+  .sn{width:12px;height:12px;font-size:6.4pt}
+  .why-text{font-size:7.8pt;line-height:1.35}
+  .why-use{margin-top:1.2mm;padding:1.4mm 2mm;font-size:7.2pt;line-height:1.3}
+  .why-icon{font-size:9pt}
+  .reflection{margin-top:3.2mm;padding:2.2mm 3mm}
+  .reflection-label{font-size:7.5pt;margin-bottom:1.8mm}
+  .refl-item .rl{font-size:7.4pt;margin-bottom:1.2mm}
+  .write-line{height:5.5mm;margin-bottom:1mm}
+  .page:first-of-type .refl-item .write-line:nth-of-type(2){display:none}
+  .pg-footer{bottom:5.5mm;left:12mm;right:12mm;font-size:7pt}
   @page{size:A4 portrait;margin:0}
 }
 </style>
@@ -331,14 +359,29 @@ body{
         <div class="rl">Ich probiere Idee … aus</div>
         <div class="write-line"></div>
         <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
       </div>
       <div class="refl-item">
         <div class="rl">In der Klasse / im Fach …</div>
         <div class="write-line"></div>
         <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
       </div>
       <div class="refl-item">
         <div class="rl">Meine Notizen</div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
         <div class="write-line"></div>
         <div class="write-line"></div>
       </div>
@@ -465,14 +508,29 @@ body{
         <div class="rl">Ich probiere Idee … aus</div>
         <div class="write-line"></div>
         <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
       </div>
       <div class="refl-item">
         <div class="rl">In der Klasse / im Fach …</div>
         <div class="write-line"></div>
         <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
       </div>
       <div class="refl-item">
         <div class="rl">Meine Notizen</div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
         <div class="write-line"></div>
         <div class="write-line"></div>
       </div>
