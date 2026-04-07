@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fobizz Workshop – Aufgaben A–D</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-2: #444;
+      --ink-3: #777;
+      --rule: #d4d4d4;
+      --bg: #fff;
+      --accent-a: #1D9E75;
+      --accent-b: #BA7517;
+      --accent-c: #185FA5;
+      --accent-d: #8B3A8B;
+      --accent-a-bg: #E1F5EE;
+      --accent-b-bg: #FAEEDA;
+      --accent-c-bg: #E6F1FB;
+      --accent-d-bg: #F3E5F5;
+      --font: 'IBM Plex Sans', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+      --page-w: 210mm;
+      --page-h: 297mm;
+    }
+
+    body {
+      font-family: var(--font);
+      background: #e8e8e8;
+      color: var(--ink);
+    }
+
+    .page {
+      width: var(--page-w);
+      min-height: var(--page-h);
+      background: var(--bg);
+      margin: 12mm auto;
+      padding: 16mm 18mm 14mm;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+    }
+
+    /* ─── Header ─── */
+    .ws-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8mm;
+      padding-bottom: 4mm;
+      border-bottom: 1.5px solid var(--ink);
+    }
+
+    .ws-header-left .kurs {
+      font-size: 9pt;
+      color: var(--ink-3);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 2px
+    }
+
+    .ws-header-left .title {
+      font-size: 16pt;
+      font-weight: 600;
+      line-height: 1.1
+    }
+
+    .ws-header-right {
+      text-align: right;
+      font-size: 8pt;
+      color: var(--ink-3);
+      line-height: 1.7
+    }
+
+    /* ─── Level badge ─── */
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 8.5pt;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 5mm;
+    }
+
+    .card-letter {
+      position: absolute;
+      top: -6mm;
+      left: 10mm;
+      font-family: var(--mono);
+      font-size: 60pt;
+      font-weight: 600;
+      color: #efefef;
+      z-index: 0;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .level-badge.easy {
+      background: var(--accent-a-bg);
+      color: var(--accent-a)
+    }
+
+    .level-badge.mid {
+      background: var(--accent-b-bg);
+      color: var(--accent-b)
+    }
+
+    .level-c {
+      background: var(--accent-c-bg);
+      color: var(--accent-c)
+    }
+
+    .level-d {
+      background: var(--accent-d-bg);
+      color: var(--accent-d)
+    }
+
+    /* ─── Ziel box ─── */
+    .ziel-box {
+      border: 1px solid var(--rule);
+      border-left-width: 3px;
+      border-radius: 3px;
+      padding: 3mm 4mm;
+      margin-bottom: 6mm;
+      font-size: 9.5pt;
+      line-height: 1.65;
+      break-inside: avoid;
+    }
+
+    .ziel-box.a {
+      border-left-color: var(--accent-a)
+    }
+
+    .ziel-box.b {
+      border-left-color: var(--accent-b)
+    }
+
+    .ziel-box.c {
+      border-left-color: var(--accent-c)
+    }
+
+    .ziel-box.d {
+      border-left-color: var(--accent-d)
+    }
+
+    .ziel-box .ziel-label {
+      font-weight: 600;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 2px;
+      color: var(--ink-3)
+    }
+
+    /* ─── Step list ─── */
+    .step-block {
+      margin-bottom: 5mm;
+      break-inside: avoid;
+    }
+
+    .step-block-title {
+      font-size: 10pt;
+      font-weight: 600;
+      margin-bottom: 2mm;
+      padding-bottom: 1mm;
+      border-bottom: 0.5px solid var(--rule);
+      break-after: avoid;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 3mm;
+      margin-bottom: 2.5mm;
+      align-items: start
+    }
+
+    .step-n {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8pt;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-n.a {
+      background: var(--accent-a)
+    }
+
+    .step-n.b {
+      background: var(--accent-b)
+    }
+
+    .step-n.c {
+      background: var(--accent-c)
+    }
+
+    .step-n.d {
+      background: var(--accent-d)
+    }
+
+    .step-text {
+      font-size: 9.5pt;
+      line-height: 1.65;
+      color: var(--ink-2)
+    }
+
+    .step-sub {
+      font-size: 8.5pt;
+      color: var(--ink-3);
+      margin-top: 1px;
+      font-family: var(--mono)
+    }
+
+    /* ─── Prompt box ─── */
+    .prompt-box {
+      background: #f7f7f7;
+      border: 0.5px solid var(--rule);
+      border-radius: 3px;
+      padding: 3mm 4mm;
+      margin: 3mm 0;
+      font-family: var(--mono);
+      font-size: 8.5pt;
+      line-height: 1.7;
+      color: var(--ink);
+      break-inside: avoid;
+    }
+
+    .prompt-label {
+      font-family: var(--font);
+      font-size: 8pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--ink-3);
+      margin-bottom: 1.5mm
+    }
+
+    /* ─── Write lines ─── */
+    .write-area {
+      margin: 3mm 0;
+      break-inside: avoid;
+    }
+
+    .write-label {
+      font-size: 8pt;
+      color: var(--ink-3);
+      margin-bottom: 2mm;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .04em
+    }
+
+    .write-line {
+      border-bottom: 0.5px solid var(--rule);
+      height: 8mm;
+      margin-bottom: 1mm
+    }
+
+    .write-box {
+      border: 0.5px solid var(--rule);
+      border-radius: 3px;
+      min-height: 22mm;
+      padding: 2mm 3mm;
+      margin: 2mm 0;
+      background: #fafafa;
+    }
+
+    /* ─── Tip / Warn ─── */
+    .tip {
+      display: flex;
+      gap: 3mm;
+      align-items: flex-start;
+      background: var(--accent-a-bg);
+      border-radius: 3px;
+      padding: 2.5mm 4mm;
+      margin: 4mm 0;
+      font-size: 9pt;
+      line-height: 1.6;
+      color: #0F6E56;
+      break-inside: avoid;
+    }
+
+    .tip-icon {
+      font-size: 11pt;
+      flex-shrink: 0;
+      margin-top: 1px
+    }
+
+    .tip.warn {
+      background: var(--accent-b-bg);
+      color: #854F0B
+    }
+
+    .tip.info {
+      background: var(--accent-c-bg);
+      color: #0C447C
+    }
+
+    .tip.purple {
+      background: var(--accent-d-bg);
+      color: #6A1B8A
+    }
+
+    /* ─── Two columns ─── */
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+      margin: 3mm 0
+    }
+
+    /* ─── Section divider ─── */
+    .section-rule {
+      border: none;
+      border-top: 0.5px solid var(--rule);
+      margin: 4mm 0
+    }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 18mm;
+      right: 18mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 7.5pt;
+      color: var(--ink-3);
+      border-top: 0.5px solid var(--rule);
+      padding-top: 2mm;
+    }
+
+    .page-footer .dot-accent {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle
+    }
+
+    .dot-a {
+      background: var(--accent-a)
+    }
+
+    .dot-b {
+      background: var(--accent-b)
+    }
+
+    .dot-c {
+      background: var(--accent-c)
+    }
+
+    .dot-d {
+      background: var(--accent-d)
+    }
+
+    /* ─── Screen chrome ─── */
+    .print-bar {
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 99
+    }
+
+    .print-bar span {
+      font-family: var(--font);
+      font-size: 13px;
+      color: #555
+    }
+
+    .print-btn {
+      font-family: var(--font);
+      font-size: 13px;
+      background: #1D9E75;
+      color: #fff;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500
+    }
+
+    .print-btn:hover {
+      background: #0F6E56
+    }
+
+    /* ─── Screenshots ─── */
+    .step-img-box {
+      margin: 4mm 0 6mm;
+      text-align: center;
+    }
+
+    .step-img-box img {
+      display: inline-block;
+      width: 70%;
+      max-height: 60mm;
+      object-fit: contain;
+      object-position: top;
+      border: 0.5px solid var(--rule);
+      border-radius: 3px;
+      background: #f9f9f9;
+    }
+
+    .cols .step-img-box img {
+      width: 100%;
+    }
+
+    .img-caption {
+      display: none;
+    }
+
+    /* ─── Print ─── */
+    @media print {
+      body {
+        background: #fff
+      }
+
+      .print-bar {
+        display: none
+      }
+
+      .page {
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0
+      }
+
+      .step-img-box {
+        break-inside: avoid
+      }
+
+      @page {
+        size: A4 portrait;
+        margin: 0
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="print-bar">
+    <span>Fobizz Workshop BMS Winterthur · 07.04.2026 · Aufgaben A–D</span>
+    <button class="print-btn" onclick="window.print()">🖨 Drucken</button>
+  </div>
+
+  <!-- ════════════════════════════════════
+     AUFGABE A – Einstieg
+     ════════════════════════════════════ -->
+  <div class="page">
+    <div class="card-letter">A</div>
+
+    <div class="ws-header">
+      <div class="ws-header-left">
+        <div class="kurs">Fobizz Workshop · BMS Winterthur · 07.04.2026</div>
+        <div class="title">Aufgabe A — Transkript &amp; Fragen</div>
+      </div>
+      <div class="ws-header-right">
+        ~15 Minuten<br>
+      </div>
+    </div>
+
+
+
+
+    <div class="ziel-box a">
+      <div class="ziel-label">Ziel</div>
+      Du nimmst einen Fachinhalt als Audio oder Video, erzeugst automatisch ein Transkript und generierst daraus
+      Verständnisfragen für den Unterricht.
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-title">1 · Transkript erstellen</div>
+
+      <div class="step">
+        <div class="step-n a">1</div>
+        <div>
+          <div class="step-text">In Fobizz gehe zu <strong>Tools und KI → KI Multimedia Tools → Transkript
+              erstellen</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n a">2</div>
+        <div>
+          <div class="step-text">Füge einen <strong>YouTube-Link</strong> oder eine Audiodatei ein — oder nutze den Link
+            von der Pinnwand im Klassenraum (Chrome-Extension für Audio-URLs).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n a">3</div>
+        <div>
+          <div class="step-text">Starte die Transkription. Warte bis das Ergebnis erscheint.</div>
+          <div class="step-sub">Tipp: Das Ergebnis wird automatisch unter <strong>Historie</strong> (oben rechts)
+            gespeichert.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-img-box">
+      <img src="../src_img/tools_menu.png" alt="Fobizz Tools Übersicht">
+      <div class="img-caption">Übersicht: Tools and AI > AI for Media Creation</div>
+    </div>
+
+    <div class="section-rule"></div>
+
+    <div class="step-block">
+      <div class="step-block-title">2 · Mit KI Chat generieren</div>
+
+      <div class="step">
+        <div class="step-n a">4</div>
+        <div>
+          <div class="step-text">Gehe zu <strong>KI Chat</strong>. Füge das Transkript ein.
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-label">Prompt-Ideen für den Unterricht</div>
+        <div style="margin-bottom:2mm">• <strong>Diskussions-Perspektive:</strong> "Generiere Diskussionsfragen aus der
+          Perspektive eines Betroffene."</div>
+        <div style="margin-bottom:2mm">• <strong>Begriff-Übersicht:</strong> "Generiere eine Übersicht der wichtigsten
+          Begriffe mit einem Verwendungsbeispiel."</div>
+        <div>• <strong>Schüler-Rolle:</strong> "Übernimm die Rolle eines schwachen/starken Schüler. Welche Fragen sind
+          nach dem Beitrag zentral für dich?"</div>
+      </div>
+
+      <div class="step">
+        <div class="step-n a">5</div>
+        <div>
+          <div class="step-text">Passe die Fragen an dein Fach an.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip info">
+      <div class="tip-icon">✨</div>
+      <div><strong>Modellauswahl beachten:</strong> Für optimale Ergebnisse in Fobizz solltest du darauf achten, ein
+        leistungsstarkes Modell zu wählen. Wir empfehlen <strong>GPT 5, Claude, Gemini, DeepSeek</strong> oder
+        <strong>Qwen</strong>.
+      </div>
+    </div>
+
+
+
+    <div class="page-footer">
+      <div><span class="dot-accent dot-a"></span>Aufgabe A</div>
+      <div>Fobizz Workshop BMS Winterthur · 07.04.2026</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+     AUFGABE B – Podcast
+     ════════════════════════════════════ -->
+  <div class="page">
+    <div class="card-letter">B</div>
+
+    <div class="ws-header">
+      <div class="ws-header-left">
+        <div class="kurs">Fobizz Workshop · BMS Winterthur · 07.04.2026</div>
+        <div class="title">Aufgabe B — Podcast generieren</div>
+      </div>
+      <div class="ws-header-right">
+        ~15 Minuten<br>
+      </div>
+    </div>
+
+
+
+    <div class="ziel-box b">
+      <div class="ziel-label">Ziel</div>
+      Du erzeugst einen KI-generierten Podcast zu einem Thema deines Fachs — mit Skript und eingesprochener Audiodatei —
+      als Lerngrundlage für deine Klasse.
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-title">1 · Podcast erstellen</div>
+
+      <div class="step">
+        <div class="step-n b">1</div>
+        <div class="step-text">In Fobizz: <strong>Tools und KI → KI Multimedia Tools → Podcast erstellen</strong>.</div>
+      </div>
+      <div class="step">
+        <div class="step-n b">2</div>
+        <div>
+          <div class="step-text"><strong>Konfiguriere deinen Podcast</strong> (Thema, Stimmen & Quellen):</div>
+          <div class="step-sub">Hinweis: Die Podcast-Länge wird automatisch reguliert (ca. 4–8 Minuten).</div>
+        </div>
+      </div>
+
+      <div style="margin:5mm 0; font-size:8.5pt; line-height:1.5">
+        <div style="font-weight:600; margin-bottom:1mm">Vorgaben & Einstellungen</div>
+        <div style="color:var(--ink-2)">
+          • <strong>Beispiele laden:</strong> Über den Textlink "Beispiel einfügen" lässt sich eine Vorlage laden,
+          falls man Hilfe beim Starten benötigt.<br>
+          • <strong>Sprachauswahl:</strong> Im Dropdown-Menü "Ausgabesprache" kann die gewünschte Sprache für den
+          generierten Podcast festgelegt werden.<br>
+          • <strong>Stimmenauswahl & Vorschau:</strong> Man kann zwei verschiedene Sprecherstimmen aus Dropdown-Menüs
+          auswählen (z.B. "Anna" und "Finn"). Über das kleine Play-Symbol lässt sich eine Hörprobe abspielen.<br>
+          • <strong>Zusatzinfos & Zielgruppe:</strong> Im Freitextfeld lassen sich spezifische Anweisungen an die KI
+          geben (z.B. Tonalität, Fokus, Begriffe). Je genauer die Vorgaben für die BMS-Zielgruppe, desto stimmiger das
+          Resultat.
+        </div>
+      </div>
+
+      <div class="tip">
+        <div class="tip-icon">✨</div>
+        <div><strong>Profitipp:</strong> Nutze das Feld <strong>Zusatzinfos & Zielgruppe</strong> für maximale
+          Präzision: Welche Tonalität (z.B. "erklärend", "sachlich", "humorvoll") soll gewählt werden? Welcher fachliche
+          Fokus ist wichtig? Welche Begriffe müssen vorkommen? <strong>Je präziser die Vorgaben, desto besser das
+            Ergebnis.</strong></div>
+      </div>
+
+      <div class="step">
+        <div class="step-n b">3</div>
+        <div class="step-text">KI erstellt Skript und Audiofile. Lade beides herunter.</div>
+      </div>
+    </div>
+
+    <div class="step-img-box">
+      <img src="../src_img/podcast1.png" alt="Podcast Creator Interface">
+      <div class="img-caption">Podcast Creator: Oberfläche für Vorgaben und Quellen</div>
+    </div>
+
+    <div class="section-rule"></div>
+
+    <div class="step-block">
+      <div class="step-block-title">2 · Weiterverarbeiten (Bonus)</div>
+      <div class="step">
+        <div class="step-n b">4</div>
+        <div class="step-text">Stelle den Podcast in einen <strong>Lernraum</strong> — Lernende hören ihn mit ihrem
+          Code-Zugang (siehe Aufgabe C).</div>
+      </div>
+      <div class="step">
+        <div class="step-n b">5</div>
+        <div class="step-text">Nutze das Skript für Aufgabe A: Verständnisfragen per KI-Chat generieren.</div>
+      </div>
+    </div>
+
+    <div class="tip info">
+      <div class="tip-icon">💡</div>
+      <div><strong>Tipp:</strong> Sowohl Skript als auch Audiofile werden automatisch in deiner
+        <strong>Historie</strong> (oben rechts) gespeichert und können jederzeit erneut aufgerufen und heruntergeladen
+        werden.</div>
+    </div>
+
+
+
+    <div class="page-footer">
+      <div><span class="dot-accent dot-b"></span>Aufgabe B</div>
+      <div>Fobizz Workshop BMS Winterthur · 07.04.2026</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+     AUFGABE C – Lernraum
+     ════════════════════════════════════ -->
+  <div class="page">
+    <div class="card-letter">C</div>
+
+    <div class="ws-header">
+      <div class="ws-header-left">
+        <div class="kurs">Fobizz Workshop · BMS Winterthur · 07.04.2026</div>
+        <div class="title">Aufgabe C — Lernraum erstellen</div>
+      </div>
+      <div class="ws-header-right">
+        ~20 Minuten<br>
+      </div>
+    </div>
+
+
+
+
+    <div class="ziel-box c">
+      <div class="ziel-label">Ziel</div>
+      Du richtest einen eigenen Lernraum ein, lädst die PDF herunter, erstellst ein Projekt und stellst ein
+      KI-Tool für deine Klasse bereit.
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-title">1 · Lernraum anlegen</div>
+
+      <div class="step">
+        <div class="step-n c">1</div>
+        <div class="step-text">Klicke oben rechts auf dein <strong>Profilsymbol → Meine Klassenräume →
+            +Anlegen</strong>.</div>
+      </div>
+
+      <div class="step-img-box">
+        <img src="../src_img/klassenraeume.png" alt="Shared Spaces">
+        <div class="img-caption">Mein fobizz > My Shared Spaces</div>
+      </div>
+
+      <div class="step">
+        <div class="step-n c">2</div>
+        <div>
+          <div class="step-text">Wähle den Typ:</div>
+          <div class="step-sub">Langfristig (bis 12 Monate, Code-Zugang) &nbsp;|&nbsp; 24h (auch per Link teilbar)</div>
+        </div>
+      </div>
+
+      <div class="step-img-box" style="margin-top:0">
+        <img src="../src_img/neuer_raum.png" alt="Neuer Klassenraum">
+        <div class="img-caption">Create: Duration selection (24h or 1 year)</div>
+      </div>
+      <div class="step">
+        <div class="step-n c">3</div>
+        <div class="step-text">Gib einen <strong>Namen</strong> und die <strong>Anzahl Teilnehmende</strong> an.
+          Speichern.</div>
+      </div>
+      <div class="step">
+        <div class="step-n c">4</div>
+        <div>
+          <div class="step-text">Lade die <strong>PDF herunter</strong> und speichere sie sicher.</div>
+          <div class="step-sub">Tipp: Im Adobe Reader Namen eintragen → ausdrucken → verteilen.</div>
+        </div>
+      </div>
+
+      <div class="step-img-box">
+        <img src="../src_img/zugangscodes.jpeg" alt="Codedatei Download">
+        <div class="img-caption">PDF herunterladen und verteilen</div>
+      </div>
+    </div>
+
+    <div class="section-rule"></div>
+
+    <div class="step-block">
+      <div class="step-block-title">2 · Projekt &amp; Tool hinzufügen</div>
+
+      <div class="step">
+        <div class="step-n c">5</div>
+        <div class="step-text">Im Lernraum: <strong>Projekt anlegen</strong>. Gib einen passenden Titel ein.</div>
+      </div>
+      <div class="step-img-box">
+        <img src="../src_img/projekt_tool.png" alt="Projekt anlegen">
+        <div class="img-caption">Lernraum > Projekt anlegen</div>
+      </div>
+      <div class="step">
+        <div class="step-n c">6</div>
+        <div class="step-text">Füge ein Tool hinzu — z.B. <strong>KI Multimedia Tool</strong>. Gib dem Projekt einen
+          aussagekräftigen Titel.</div>
+      </div>
+
+      <div class="step-img-box">
+        <img src="../src_img/projekt_tool.png" alt="Tool hinzufügen">
+        <div class="img-caption">Lernraum > KI-Multimedia-Tool hinzufügen</div>
+      </div>
+      <div class="step">
+        <div class="step-n c">7</div>
+        <div>
+          <div class="step-text"><strong>Speichern und Raumzeit definieren:</strong> Nach dem Speichern kann der Zugang
+            für max. 7 Tage verlängert werden. Mehrmals auf das Pluszeichen klicken.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-rule"></div>
+
+    <div class="step-block">
+      <div class="step-block-title">3 · Aktivitäten einsehen & exportieren</div>
+      <div class="step">
+        <div class="step-n c">8</div>
+        <div class="step-text">Im Projekt: Drei-Punkte-Symbol → Aktivitäten der Lernenden einsehen.</div>
+      </div>
+      <div class="step">
+        <div class="step-n c">9</div>
+        <div class="step-text">Ergebnisse exportieren: Lade die Daten als Tabelle herunter. ⚠ Wichtig: Nicht bei allen
+          Aktivitäten ist eine Einsicht möglich (z.B. Transkriptionen werden nach Sitzungs-Ende gelöscht).</div>
+      </div>
+    </div>
+
+    <div class="tip warn">
+      <div class="tip-icon">📸</div>
+      <div>Praxisbeispiel: Lernende können mit dem Smartphone Fotos machen und mit dem Tool <strong>"Text aus Bild oder
+          PDF erkennen"</strong> bearbeiten. Sie können das Ergebnis downloaden oder direkt mit der KI weiterarbeiten.
+      </div>
+    </div>
+
+    <div class="tip info">
+      <div class="tip-icon">ℹ</div>
+      <div>Lernende sehen nach dem Login mit ihrem -Zugang nur die Projekte und Tools, die du für sie freigegeben hast.
+        Keine eigene Registrierung nötig — datenschutzkonform.</div>
+    </div>
+
+
+
+    <div class="page-footer">
+      <div><span class="dot-accent dot-c"></span>Aufgabe C</div>
+      <div>Fobizz Workshop BMS Winterthur · 07.04.2026</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+     AUFGABE D – Bot
+     ════════════════════════════════════ -->
+  <div class="page">
+    <div class="card-letter">D</div>
+
+    <div class="ws-header">
+      <div class="ws-header-left">
+        <div class="kurs">Fobizz Workshop · BMS Winterthur · 07.04.2026</div>
+        <div class="title">Aufgabe D — KI-Assistent konfigurieren</div>
+      </div>
+      <div class="ws-header-right">
+        ~25 Minuten<br>
+      </div>
+    </div>
+
+
+
+
+    <div class="ziel-box d" style="border-left-color:var(--accent-d)">
+      <div class="ziel-label">Ziel</div>
+      Du erstellst einen eigenen KI-Assistenten für dein Fach, stellst ihn in deinen Lernraum und teilst ihn per Link.
+      Nutze dazu die Starthilfe: <strong><a href="https://to.fobizz.com/AgentMaker" target="_blank"
+          style="color:var(--accent-d); text-decoration:none">to.fobizz.com/AgentMaker</a></strong>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-title">1 · AgentMaker nutzen (Starthilfe)</div>
+      <div class="step">
+        <div class="step-n d" style="background:var(--accent-d)">1</div>
+        <div>
+          <div class="step-text">Gehe zu <strong><a href="https://to.fobizz.com/AgentMaker" target="_blank"
+                style="color:var(--accent-d); text-decoration:none">to.fobizz.com/AgentMaker</a></strong>.</div>
+          <div class="step-sub">Dieser Bot hilft dir, Rolle, Aufgabe und System-Prompt für deinen eigenen Assistenten zu
+            entwickeln.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n d" style="background:var(--accent-d)">2</div>
+        <div class="step-text">Chatte mit dem AgentMaker — er stellt dir Fragen zu deinem Fach und generiert einen
+          fertigen Prompt-Text.</div>
+      </div>
+    </div>
+
+    <div class="section-rule"></div>
+
+    <div class="step-block">
+      <div class="step-block-title">2 · Eigenen Bot erstellen</div>
+      <div class="step">
+        <div class="step-n d" style="background:var(--accent-d)">3</div>
+        <div class="step-text"><strong>Tools und KI → KI Chat und Assistenten → KI-Assistenten Katalog → Eigene
+            KI-Assistenten → Neu erstellen</strong>.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-n d" style="background:var(--accent-d)">4</div>
+        <div>
+          <div class="step-text">Füge die mit dem AgentMaker generierte Prompt in das Textfeld ein.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n d" style="background:var(--accent-d)">5</div>
+        <div class="step-text">Optional: Lade ein <strong>Fachdokument</strong> hoch (Gesetzestext, Zusammenfassung,
+          Aufgabenblatt) als Wissensbasis.</div>
+      </div>
+      <div class="step">
+        <div class="step-n d" style="background:var(--accent-d)">6</div>
+        <div class="step-text">Speichern. Danach: <strong>Teilen-Button → In Klassenraum stellen</strong> oder
+          <strong>Freigabelink kopieren</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="step-img-box">
+        <img src="../src_img/assistent_wizard.png" alt="Assistent anlegen">
+        <div class="img-caption">Wizard: Create your own assistant</div>
+      </div>
+      <div class="step-img-box">
+        <img src="../src_img/teilen_dialog.png" alt="Bot teilen">
+        <div class="img-caption">Share options: Link or Class Share</div>
+      </div>
+    </div>
+
+    <div class="tip purple">
+      <div class="tip-icon">🔗</div>
+      <div>
+        <strong>Sharing & Remixing:</strong> Jede freigegebene KI (Bot) kann von anderen Lehrpersonen als Kopie
+        übernommen und angepasst werden (Remix).<br>
+        <strong>Klassenraum:</strong> Bots können auch direkt von Lernenden in Projekten (siehe Aufgabe C) erstellt
+        werden.
+      </div>
+    </div>
+
+
+
+    <div class="page-footer">
+      <div><span class="dot-accent dot-d"></span>Aufgabe D</div>
+      <div>Fobizz Workshop BMS Winterthur · 07.04.2026</div>
+    </div>
+  </div>
+
+</body>
+
+</html>

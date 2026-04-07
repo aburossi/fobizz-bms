@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fobizz Workshop – Weitere Ideen</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a1a;
+  --ink-2:#3a3a3a;
+  --ink-3:#777;
+  --ink-4:#aaa;
+  --rule:#ddd;
+  --rule-light:#ececec;
+  --bg:#fff;
+  --font:'IBM Plex Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+
+  /* per-idea colors */
+  --e:#0e7c5b; --e-bg:#e4f5ef; --e-mid:#9FE1CB;
+  --f:#7a3fbf; --f-bg:#f0e8fb; --f-mid:#c8a8f0;
+  --g:#b05c10; --g-bg:#fdf0e2; --g-mid:#f9c97a;
+  --h:#1a5fa8; --h-bg:#e6f1fb; --h-mid:#85B7EB;
+  --i:#a0284a; --i-bg:#fbe8ee; --i-mid:#f4aabf;
+  --j:#087f5b; --j-bg:#e6fcf5; --j-mid:#96f2d7;
+}
+
+body{
+  font-family:var(--font);
+  background:#e0e0e0;
+  color:var(--ink);
+}
+
+.page{
+  width:210mm;
+  min-height:297mm;
+  background:var(--bg);
+  margin:10mm auto;
+  padding:14mm 16mm 16mm;
+  position:relative;
+  page-break-after:always;
+  break-after:page;
+}
+
+/* ── Header ── */
+.pg-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  padding-bottom:3.5mm;
+  border-bottom:1.5px solid var(--ink);
+  margin-bottom:7mm;
+}
+.pg-header-left .super{font-size:8pt;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
+.pg-header-left .title{font-size:15pt;font-weight:600;line-height:1.1}
+.pg-header-right{font-size:8pt;color:var(--ink-3);text-align:right;line-height:1.7}
+
+/* ── Intro text (page 1 only) ── */
+.intro{
+  font-size:9.5pt;line-height:1.65;color:var(--ink-2);
+  border-left:2.5px solid var(--rule);
+  padding-left:4mm;
+  margin-bottom:6mm;
+}
+
+/* ── Idea card ── */
+.idea{
+  border:0.5px solid var(--rule);
+  border-radius:4px;
+  margin-bottom:4.5mm;
+  overflow:hidden;
+}
+.idea-head{
+  display:grid;
+  grid-template-columns:38px 1fr auto;
+  align-items:center;
+  gap:0;
+  padding:3mm 4mm 3mm 3mm;
+  border-bottom:0.5px solid var(--rule-light);
+}
+.idea-letter{
+  font-family:var(--mono);
+  font-size:17pt;font-weight:500;
+  line-height:1;
+  padding-right:3mm;
+}
+.idea-meta .idea-title{font-size:10.5pt;font-weight:600;line-height:1.2;margin-bottom:1px}
+.idea-meta .idea-sub{font-size:8pt;color:var(--ink-3)}
+.idea-badge{
+  font-size:7.5pt;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;align-self:start;
+}
+
+.idea-body{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+}
+.idea-col{
+  padding:3mm 4mm;
+}
+.idea-col:first-child{
+  border-right:0.5px solid var(--rule-light);
+}
+.col-label{
+  font-size:7.5pt;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:2mm;
+}
+.col-steps{list-style:none;display:flex;flex-direction:column;gap:1.5mm}
+.col-steps li{
+  display:grid;grid-template-columns:16px 1fr;gap:2mm;
+  font-size:8.5pt;line-height:1.55;color:var(--ink-2);
+  align-items:start;
+}
+.sn{
+  width:14px;height:14px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:7pt;font-weight:600;color:#fff;flex-shrink:0;margin-top:1px;
+}
+.why-text{
+  font-size:8.5pt;line-height:1.6;color:var(--ink-2);
+}
+.why-use{
+  display:flex;gap:2mm;align-items:flex-start;
+  margin-top:2mm;
+  background:#f8f8f8;
+  border-radius:2px;
+  padding:2mm 3mm;
+  font-size:8pt;line-height:1.55;color:var(--ink-3);
+  font-style:italic;
+}
+.why-icon{flex-shrink:0;font-size:10pt;margin-top:0px}
+
+/* ── Color variants ── */
+.e .idea-letter{color:var(--e)}
+.e .idea-head{background:var(--e-bg)}
+.e .col-label{color:var(--e)}
+.e .sn{background:var(--e)}
+.e .idea-badge{background:var(--e-bg);color:var(--e);border:0.5px solid var(--e-mid)}
+
+.f .idea-letter{color:var(--f)}
+.f .idea-head{background:var(--f-bg)}
+.f .col-label{color:var(--f)}
+.f .sn{background:var(--f)}
+.f .idea-badge{background:var(--f-bg);color:var(--f);border:0.5px solid var(--f-mid)}
+
+.g .idea-letter{color:var(--g)}
+.g .idea-head{background:var(--g-bg)}
+.g .col-label{color:var(--g)}
+.g .sn{background:var(--g)}
+.g .idea-badge{background:var(--g-bg);color:var(--g);border:0.5px solid var(--g-mid)}
+
+.h .idea-letter{color:var(--h)}
+.h .idea-head{background:var(--h-bg)}
+.h .col-label{color:var(--h)}
+.h .sn{background:var(--h)}
+.h .idea-badge{background:var(--h-bg);color:var(--h);border:0.5px solid var(--h-mid)}
+
+.i .idea-badge{background:var(--i-bg);color:var(--i);border:0.5px solid var(--i-mid)}
+
+.j .idea-letter{color:var(--j)}
+.j .idea-head{background:var(--j-bg)}
+.j .col-label{color:var(--j)}
+.j .sn{background:var(--j)}
+.j .idea-badge{background:var(--j-bg);color:var(--j);border:0.5px solid var(--j-mid)}
+
+/* ── Reflection row ── */
+.reflection{
+  margin-top:5mm;
+  border:0.5px solid var(--rule);
+  border-radius:4px;
+  padding:3mm 4mm;
+}
+.reflection-label{font-size:8pt;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:3mm}
+.refl-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm}
+.refl-item .rl{font-size:8pt;color:var(--ink-3);margin-bottom:2mm;font-weight:500}
+.write-line{border-bottom:0.5px solid var(--rule);height:7mm;margin-bottom:1.5mm}
+
+/* ── Footer ── */
+.pg-footer{
+  position:absolute;bottom:9mm;left:16mm;right:16mm;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:7.5pt;color:var(--ink-4);
+  border-top:0.5px solid var(--rule);padding-top:2mm;
+}
+
+/* ── Print bar ── */
+.print-bar{
+  background:#fff;border-bottom:1px solid #ccc;
+  padding:9px 20px;display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:99;
+}
+.print-bar span{font-family:var(--font);font-size:13px;color:#555}
+.print-btn{
+  font-family:var(--font);font-size:13px;
+  background:#1D9E75;color:#fff;border:none;
+  padding:6px 16px;border-radius:4px;cursor:pointer;font-weight:500;
+}
+.print-btn:hover{background:#0F6E56}
+
+@media print{
+  body{background:#fff}
+  .print-bar{display:none}
+  .page{margin:0;box-shadow:none}
+  @page{size:A4 portrait;margin:0}
+}
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  <span>Fobizz Workshop BMS Winterthur · Weitere Ideen E–J</span>
+  <button class="print-btn" onclick="window.print()">🖨 Drucken</button>
+</div>
+
+<!-- ══════════════════════════════
+     SEITE 1 — Ideen E, F, G
+     ══════════════════════════════ -->
+<div class="page">
+
+  <div class="pg-header">
+    <div class="pg-header-left">
+      <div class="super">Fobizz Workshop · BMS Winterthur · 07.04.2026</div>
+      <div class="title">Weitere Ideen zum Ausprobieren</div>
+    </div>
+    <div class="pg-header-right">Seite 1 / 2</div>
+  </div>
+
+  <div class="intro">
+    Die folgenden Ideen ergänzen die Aufgaben A–D. Sie sind bewusst kurz gehalten — als Impulse, nicht als vollständige Anleitungen. Jede Idee zeigt: <strong>wie</strong> du anfängst und <strong>warum</strong> sie sich im Lehrpersonen-Alltag lohnt.
+  </div>
+
+  <!-- ── Idee E ── -->
+  <div class="idea e">
+    <div class="idea-head">
+      <div class="idea-letter">E</div>
+      <div class="idea-meta">
+        <div class="idea-title">QR-Code &amp; Kurzlink erstellen</div>
+        <div class="idea-sub">Inhalte sicher teilen · ca. 10 Min</div>
+      </div>
+
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Wie</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>In Fobizz: <strong>Inhalte sicher teilen → Link kürzen</strong>. Beliebigen Link (Video, Arbeitsblatt, Website) einfügen und kürzen.</div></li>
+          <li><div class="sn">2</div><div>Dann: <strong>QR-Code erstellen</strong>. Den Kurzlink einfügen → QR generieren → herunterladen.</div></li>
+          <li><div class="sn">3</div><div>QR-Code direkt auf ein Arbeitsblatt oder eine Folie einfügen.</div></li>
+          <li><div class="sn">4</div><div>Bonus: In der Auswertung siehst du, wie oft der Code gescannt wurde.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Warum im Alltag</div>
+        <div class="why-text">Du verlinkst Lernmaterial ohne lange URLs auf Papier. Lernende scannen mit dem Handy — kein Tippen, kein Suchen. Die Scan-Auswertung zeigt dir passiv, ob eine Ressource wirklich genutzt wird.</div>
+        <div class="why-use">
+          <div class="why-icon">→</div>
+          <div>Deutsch: Primärtext oder Hörtext per QR auf dem Aufgabenblatt. Physik: Erklärvideo direkt neben der Aufgabe. Mathe: Lösungshinweis nur per QR — wer ihn scannt, entscheidet selbst.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Idee F ── -->
+  <div class="idea f">
+    <div class="idea-head">
+      <div class="idea-letter">F</div>
+      <div class="idea-meta">
+        <div class="idea-title">Pinnwand oder Umfrage erstellen</div>
+        <div class="idea-sub">Material anlegen · ca. 10 Min</div>
+      </div>
+
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Wie</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div><strong>Material anlegen → Pinnwand</strong> oder <strong>Umfrage</strong> wählen.</div></li>
+          <li><div class="sn">2</div><div>Pinnwand: Frage oder Auftrag eingeben. Lernende posten mit ihrem Code anonym oder mit Name.</div></li>
+          <li><div class="sn">3</div><div>Umfrage: 3–5 Antwortoptionen eingeben. Ergebnisse erscheinen live auf deinem Bildschirm.</div></li>
+          <li><div class="sn">4</div><div>Über <strong>Teilen → In Lernraum stellen</strong> oder per Link verteilen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Warum im Alltag</div>
+        <div class="why-text">Pinnwand ersetzt Padlet — ohne Accounts, datenschutzkonform. Umfrage ersetzt Mentimeter. Beides ist in unter 2 Minuten erstellt und lässt sich spontan einsetzen.</div>
+        <div class="why-use">
+          <div class="why-icon">→</div>
+          <div>Sozialwiss.: Einstieg mit Umfrage «Was weisst du über die AHV?». Deutsch: Pinnwand für Textreaktionen nach einer Lektüre. Alle Fächer: Reflexion am Ende — «Was habe ich heute gelernt?»</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Idee G ── -->
+  <div class="idea g">
+    <div class="idea-head">
+      <div class="idea-letter">G</div>
+      <div class="idea-meta">
+        <div class="idea-title">Dokument aus Bild oder PDF transkribieren</div>
+        <div class="idea-sub">KI Multimedia Tools · ca. 15 Min</div>
+      </div>
+
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Wie</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div><strong>Tools und KI → KI Multimedia Tools → Text aus Bild oder PDF erkennen</strong>.</div></li>
+          <li><div class="sn">2</div><div>Foto eines Texts, eines handschriftlichen Dokuments oder einer PDF-Seite hochladen.</div></li>
+          <li><div class="sn">3</div><div>KI wandelt das Bild in bearbeitbaren Text um. Ergebnis sofort kopieren oder herunterladen.</div></li>
+          <li><div class="sn">4</div><div>Bonus: Text in den KI-Chat laden → zusammenfassen, Fragen generieren, vereinfachen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Warum im Alltag</div>
+        <div class="why-text">Alte Prüfungen, Lehrmittelseiten, handschriftliche Notizen — alles wird in Sekunden zu editierbarem Text. Kein Abtippen mehr. Besonders wertvoll für MINT-Fächer mit Formeln und Diagrammen.</div>
+        <div class="why-use">
+          <div class="why-icon">→</div>
+          <div>Physik/Mathe: Aufgabenstellung fotografieren → Text extrahieren → direkt mit KI bearbeiten. Deutsch: Handschriftlichen Schülertext digitalisieren und Feedback einholen. Alle: Altes Lehrmittel digitalisieren.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reflection row page 1 -->
+  <div class="reflection">
+    <div class="reflection-label">Mein nächster Schritt</div>
+    <div class="refl-grid">
+      <div class="refl-item">
+        <div class="rl">Ich probiere Idee … aus</div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+      <div class="refl-item">
+        <div class="rl">In der Klasse / im Fach …</div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+      <div class="refl-item">
+        <div class="rl">Meine Notizen</div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div>Fobizz Workshop BMS Winterthur · 07.04.2026</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     SEITE 2 — Ideen H, I + Abschluss
+     ══════════════════════════════ -->
+<div class="page">
+
+  <div class="pg-header">
+    <div class="pg-header-left">
+      <div class="super">Fobizz Workshop · BMS Winterthur · 07.04.2026</div>
+      <div class="title">Weitere Ideen — Fortsetzung</div>
+    </div>
+    <div class="pg-header-right">Seite 2 / 2</div>
+  </div>
+
+  <!-- ── Idee H ── -->
+  <div class="idea h">
+    <div class="idea-head">
+      <div class="idea-letter">H</div>
+      <div class="idea-meta">
+        <div class="idea-title">Bot für deine Lernenden — nicht für dich</div>
+        <div class="idea-sub">KI-Assistenten · ca. 25 Min</div>
+      </div>
+
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Wie</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Überlege zuerst: <em>Was brauchen meine Lernenden?</em> Erklärhilfe? Prüfungsvorbereitung? Feedback auf Texte?</div></li>
+          <li><div class="sn">2</div><div>Bot konfigurieren (wie Aufgabe D) — aber der Prompt ist aus Sicht der Lernenden formuliert, nicht aus deiner.</div></li>
+          <li><div class="sn">3</div><div>Wichtig: Bot soll <strong>nicht Antworten liefern</strong>, sondern mit Rückfragen führen.</div></li>
+          <li><div class="sn">4</div><div>Bot in Lernraum stellen, Link im gemeinsamen Ordner ablegen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Warum im Alltag</div>
+        <div class="why-text">Ein gut konfigurierter Bot übernimmt Routinefragen von Lernenden — ausserhalb der Unterrichtszeit, ohne dich. Das schafft Raum für tiefere Interaktionen im Unterricht. Der Unterschied zu ChatGPT: Du kontrollierst das Wissen und den Ton.</div>
+        <div class="why-use">
+          <div class="why-icon">→</div>
+          <div>Mathematik: Bot führt durch Lösungsschritte mit Rückfragen, gibt keine Lösungen direkt. Deutsch: Bot gibt Feedback auf Erörterungen nach einer Bewertungsrubrik. Physik: Bot erklärt Konzepte auf Nachfrage mit Alltagsbeispielen.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Idee I ── -->
+  <div class="idea i">
+    <div class="idea-head">
+      <div class="idea-letter">I</div>
+      <div class="idea-meta">
+        <div class="idea-title">KI-Chat für deine eigene LP-Arbeit</div>
+        <div class="idea-sub">KI Chat · ca. 15 Min</div>
+      </div>
+
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Wie</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div><strong>Tools und KI → KI Chat → Chat starten</strong>.</div></li>
+          <li><div class="sn">2</div><div>Wähle ein Sprachmodell (z.B. GPT-4o, Claude) und stelle eine Aufgabe aus deinem Fach.</div></li>
+          <li><div class="sn">3</div><div>Probiere einen dieser Prompts aus (rechte Spalte).</div></li>
+          <li><div class="sn">4</div><div>Feineinstellungen: Beim Schieberegler-Symbol Output-Länge und Kontext anpassen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Warum im Alltag</div>
+        <div class="why-text">Kein Lernraum, kein Code, kein Setup — einfach chatten. Für Lehrpersonen der direkteste Einstieg: Prüfungsaufgaben entwerfen, Unterrichtssequenzen skizzieren, Feedbackformulierungen generieren. Datenschutzkonform, weil über Fobizz.</div>
+        <div class="why-use">
+          <div class="why-icon">→</div>
+          <div>«Erstelle 3 Prüfungsaufgaben zu [Thema] auf BMS-Niveau.» · «Gib mir Feedback auf diese Aufgabenstellung.» · «Formuliere eine differenzierte Version dieser Aufgabe für Lernende mit Schwierigkeiten.»</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Idee J ── -->
+  <div class="idea j">
+    <div class="idea-head">
+      <div class="idea-letter">J</div>
+      <div class="idea-meta">
+        <div class="idea-title">Promptlabor erkunden</div>
+        <div class="idea-sub">Fertige Prompts nutzen &amp; lernen · ca. 15 Min</div>
+      </div>
+
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Wie</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Öffne <strong>Tools und KI → KI Promptlabor</strong>. Hier findest du hunderte kuratierte Prompts speziell für den Unterricht.</div></li>
+          <li><div class="sn">2</div><div>Suche nach deinem Fach oder einer Kategorie (z.B. Differenzierung). Wähle einen Prompt aus.</div></li>
+          <li><div class="sn">3</div><div>Klicke auf <strong>«Weiter mit KI chatten»</strong>. Der Prompt wird direkt in den Chat übernommen.</div></li>
+          <li><div class="sn">4</div><div>So siehst du, wie der Prompt aufgebaut ist (Prompt-Engineering) und kannst ihn direkt für dich anpassen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Warum im Alltag</div>
+        <div class="why-text">Du musst das Rad nicht neu erfinden. Die Prompts sind von fobizz vorformuliert und auf Schul-Kontexte optimiert. Durch das Öffnen im Chat lernst du «on the job», wie man gute Anweisungen schreibt und erzielst sofort bessere Ergebnisse.</div>
+        <div class="why-use">
+          <div class="why-icon">→</div>
+          <div>Alle Fächer: Schnell Erklärungen auf verschiedenen Niveaus generieren. Orga: Elternbriefe oder Ausflugsplanungen mit fertigen Vorlagen beschleunigen. Methodik: Neue Impulse für kooperative Lernformen finden.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reflection row page 2 -->
+  <div class="reflection">
+    <div class="reflection-label">Mein nächster Schritt</div>
+    <div class="refl-grid">
+      <div class="refl-item">
+        <div class="rl">Ich probiere Idee … aus</div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+      <div class="refl-item">
+        <div class="rl">In der Klasse / im Fach …</div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+      <div class="refl-item">
+        <div class="rl">Meine Notizen</div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div>Fobizz Workshop BMS Winterthur · 07.04.2026</div>
+  </div>
+</div>
+
+</body>
+</html>

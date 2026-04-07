@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fobizz Workshop – Bot-Übersicht</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a1a;
+  --ink-2:#3a3a3a;
+  --ink-3:#777;
+  --ink-4:#aaa;
+  --rule:#ddd;
+  --rule-light:#ececec;
+  --bg:#fff;
+  --font:'IBM Plex Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+
+  /* per-idea colors */
+  --e:#0e7c5b; --e-bg:#e4f5ef; --e-mid:#9FE1CB;
+  --f:#7a3fbf; --f-bg:#f0e8fb; --f-mid:#c8a8f0;
+  --g:#b05c10; --g-bg:#fdf0e2; --g-mid:#f9c97a;
+  --h:#1a5fa8; --h-bg:#e6f1fb; --h-mid:#85B7EB;
+  --i:#a0284a; --i-bg:#fbe8ee; --i-mid:#f4aabf;
+  --j:#087f5b; --j-bg:#e6fcf5; --j-mid:#96f2d7;
+}
+
+body{
+  font-family:var(--font);
+  background:#e0e0e0;
+  color:var(--ink);
+}
+
+.page{
+  width:210mm;
+  min-height:297mm;
+  background:var(--bg);
+  margin:10mm auto;
+  padding:14mm 16mm 16mm;
+  position:relative;
+  page-break-after:always;
+  break-after:page;
+}
+
+/* ── Header ── */
+.pg-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  padding-bottom:3.5mm;
+  border-bottom:1.5px solid var(--ink);
+  margin-bottom:7mm;
+}
+.pg-header-left .super{font-size:8pt;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
+.pg-header-left .title{font-size:15pt;font-weight:600;line-height:1.1}
+.pg-header-right{font-size:8pt;color:var(--ink-3);text-align:right;line-height:1.7}
+
+/* ── Intro text ── */
+.intro{
+  font-size:9.5pt;line-height:1.65;color:var(--ink-2);
+  border-left:2.5px solid var(--rule);
+  padding-left:4mm;
+  margin-bottom:6mm;
+}
+
+/* ── Idea card (Bot Card) ── */
+.idea{
+  border:0.5px solid var(--rule);
+  border-radius:4px;
+  margin-bottom:4.5mm;
+  overflow:hidden;
+}
+.idea-head{
+  display:grid;
+  grid-template-columns:38px 1fr auto;
+  align-items:center;
+  gap:0;
+  padding:3mm 4mm 3mm 3mm;
+  border-bottom:0.5px solid var(--rule-light);
+}
+.idea-letter{
+  font-family:var(--mono);
+  font-size:17pt;font-weight:500;
+  line-height:1;
+  padding-right:3mm;
+}
+.idea-meta .idea-title{font-size:10.5pt;font-weight:600;line-height:1.2;margin-bottom:1px}
+.idea-meta .idea-sub{font-size:8.5pt;color:var(--ink-2);font-weight:500}
+.idea-badge{
+  font-size:7.5pt;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;align-self:start;
+}
+
+.idea-body{
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  gap:0;
+}
+.idea-col{
+  padding:3mm 4mm;
+}
+.idea-col:first-child{
+  border-right:0.5px solid var(--rule-light);
+}
+.col-label{
+  font-size:7.5pt;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:2mm;
+}
+.col-steps{list-style:none;display:flex;flex-direction:column;gap:1.5mm}
+.col-steps li{
+  display:grid;grid-template-columns:16px 1fr;gap:2mm;
+  font-size:8.5pt;line-height:1.45;color:var(--ink-2);
+  align-items:start;
+}
+.sn{
+  width:14px;height:14px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:7pt;font-weight:600;color:#fff;flex-shrink:0;margin-top:1px;
+}
+.why-text{
+  font-size:8.5pt;line-height:1.5;color:var(--ink-2);
+}
+.why-use{
+  display:flex;gap:2mm;align-items:flex-start;
+  margin-top:2mm;
+  background:#f8f8f8;
+  border-radius:2px;
+  padding:2.5mm 3mm;
+  font-size:8pt;line-height:1.45;color:var(--ink-3);
+  font-style:normal;
+  border-left:2px solid var(--rule);
+}
+.why-use a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+}
+
+/* ── Color variants ── */
+.v1 .idea-letter{color:var(--e)} .v1 .idea-head{background:var(--e-bg)} .v1 .col-label{color:var(--e)} .v1 .sn{background:var(--e)}
+.v2 .idea-letter{color:var(--f)} .v2 .idea-head{background:var(--f-bg)} .v2 .col-label{color:var(--f)} .v2 .sn{background:var(--f)}
+.v3 .idea-letter{color:var(--g)} .v3 .idea-head{background:var(--g-bg)} .v3 .col-label{color:var(--g)} .v3 .sn{background:var(--g)}
+.v4 .idea-letter{color:var(--h)} .v4 .idea-head{background:var(--h-bg)} .v4 .col-label{color:var(--h)} .v4 .sn{background:var(--h)}
+.v5 .idea-letter{color:var(--i)} .v5 .idea-head{background:var(--i-bg)} .v5 .col-label{color:var(--i)} .v5 .sn{background:var(--i)}
+.v6 .idea-letter{color:var(--j)} .v6 .idea-head{background:var(--j-bg)} .v6 .col-label{color:var(--j)} .v6 .sn{background:var(--j)}
+
+/* ── Reflection row ── */
+.reflection{
+  margin-top:5mm;
+  border:0.5px solid var(--rule);
+  border-radius:4px;
+  padding:3mm 4mm;
+}
+.reflection-label{font-size:8pt;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:3mm}
+.refl-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm}
+.refl-item .rl{font-size:8pt;color:var(--ink-3);margin-bottom:2mm;font-weight:500}
+.write-line{border-bottom:0.5px solid var(--rule);height:7mm;margin-bottom:1.5mm}
+
+/* ── Footer ── */
+.pg-footer{
+  position:absolute;bottom:9mm;left:16mm;right:16mm;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:7.5pt;color:var(--ink-4);
+  border-top:0.5px solid var(--rule);padding-top:2mm;
+}
+
+/* ── Print bar ── */
+.print-bar{
+  background:#fff;border-bottom:1px solid #ccc;
+  padding:9px 20px;display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:99;
+}
+.print-bar span{font-family:var(--font);font-size:13px;color:#555}
+.shortlink-header{
+  background:#f0e8fb;color:#7a3fbf;border:1px solid #c8a8f0;
+  padding:2px 10px;border-radius:30px;font-weight:600;font-size:9pt;
+  font-family:var(--mono);display:inline-flex;align-items:center;gap:1.5mm;
+}
+.shortlink-header span{color:var(--ink-3);font-weight:400;font-size:8pt;text-transform:uppercase;letter-spacing:.03em}
+.print-btn{
+  font-family:var(--font);font-size:13px;
+  background:#1D9E75;color:#fff;border:none;
+  padding:6px 16px;border-radius:4px;cursor:pointer;font-weight:500;
+}
+.print-btn:hover{background:#0F6E56}
+
+@media print{
+  body{background:#fff}
+  .print-bar{display:none}
+  .page{margin:0;box-shadow:none}
+  @page{size:A4 portrait;margin:0}
+}
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  <span>Fobizz Workshop – Speziaisierte KI-Bots Übersicht</span>
+  <button class="print-btn" onclick="window.print()">🖨 Drucken</button>
+</div>
+
+<!-- ══════════════════════════════
+     SEITE 1 — Bots 1-5
+     ══════════════════════════════ -->
+<div class="page">
+
+  <div class="pg-header">
+    <div class="pg-header-left">
+      <div class="super">Fobizz Workshop · BMS Winterthur · 07.04.2026</div>
+      <div class="title">Spezialisierte KI-Bots für den Unterricht</div>
+    </div>
+    <div class="pg-header-right">
+      <div class="shortlink-header"><span>Direktlinks:</span> to.fobizz.com/bots</div>
+      <div style="margin-top:1.5mm">Seite 1 / 2</div>
+    </div>
+  </div>
+
+  <div class="intro">
+    KI-Bots sind vorkonfigurierte Assistenten, die für spezifische Aufgaben optimiert wurden. Diese Übersicht zeigt Bots, die direkt im Lehrpersonen-Alltag oder mit Lernenden eingesetzt werden können.
+  </div>
+
+  <!-- Bot 1 -->
+  <div class="idea v1">
+    <div class="idea-head">
+      <div class="idea-letter">1</div>
+      <div class="idea-meta">
+        <div class="idea-title">Legal Mentor</div>
+        <div class="idea-sub">Schweizer Privatrecht & Berufsbildung</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Erklärt Rechtsbegriffe (OR, ZGB, SchKG etc.) einfach und verständlich.</div></li>
+          <li><div class="sn">2</div><div>Löst Übungsfälle schrittweise mit Verweisen auf offizielle Quellen (Fedlex).</div></li>
+          <li><div class="sn">3</div><div>Nutzt aktuelle Webrecherche für up-to-date Informationen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Gibt Lernenden Sicherheit im Umgang mit Gesetzestexten und bereitet gezielt auf Rechtsfragen in Prüfungen vor.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/a9ba8e29-9a12-4cda-9406-a8aa696743b4?token=8227439b86836c259d89876a2bca31d6" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot 2 -->
+  <div class="idea v2">
+    <div class="idea-head">
+      <div class="idea-letter">2</div>
+      <div class="idea-meta">
+        <div class="idea-title">Ethik-Dilemma Begleiter</div>
+        <div class="idea-sub">Moralische Urteilsbildung (B1–B2)</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Analysiert Dilemmata aus utilitaristischer und deontologischer Sicht.</div></li>
+          <li><div class="sn">2</div><div>Führt Nutzer mittels sokratischer Fragestellung zur eigenen Meinung.</div></li>
+          <li><div class="sn">3</div><div>Klärt Perspektiven, Stakeholder und langfristige Konsequenzen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Fördert die Fähigkeit zur begründeten ethischen Urteilsbildung in komplexen Lebenssituationen.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/1d39b7fe-b841-4bfc-bcdd-479095306fe3?token=0f7a90268147614edacbedd717a40b13" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot 3 -->
+  <div class="idea v3">
+    <div class="idea-head">
+      <div class="idea-letter">3</div>
+      <div class="idea-meta">
+        <div class="idea-title">Kahoot-Tutor</div>
+        <div class="idea-sub">Quiz-Erstellung per Express</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Wandelt beliebige Fachtexte in prägnante Kahoot-Fragen um.</div></li>
+          <li><div class="sn">2</div><div>Erstellt automatisch vier Antwortoptionen und markiert die korrekte Lösung.</div></li>
+          <li><div class="sn">3</div><div>Liefert eine fertige Import-Tabelle für den Kahoot-Upload.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Enorme Zeitersparnis bei der Vorbereitung von spielerischen Lernkontrollen und Wiederholungen.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/2aa09403-a9c8-4a1a-a4e4-a3e06d39065b?token=d0283c408e3f9d15ed01a9faceae29c0" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot 4 -->
+  <div class="idea v4">
+    <div class="idea-head">
+      <div class="idea-letter">4</div>
+      <div class="idea-meta">
+        <div class="idea-title">Lernen mit Analogien (Berufsbildung)</div>
+        <div class="idea-sub">Transfer von Abstraktem zu Bekanntem</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Verknüpft Fachwissen mit der Lebenswelt (Gaming, Sport, Social Media).</div></li>
+          <li><div class="sn">2</div><div>Erstellt Geschichten und Metaphern für bessere Merkfähigkeit.</div></li>
+          <li><div class="sn">3</div><div>Bietet Erklärungen auf zwei Niveaustufen (Basics & Advanced).</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Hilft, komplexe technische oder theoretische Konzepte nachhaltig im Langzeitgedächtnis zu verankern.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/0f8e7a1c-e76b-4d31-a5df-813cb085d702?token=b69d266c3323f026fbd27e2df6d12df1" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot 5 -->
+  <div class="idea v5">
+    <div class="idea-head">
+      <div class="idea-letter">5</div>
+      <div class="idea-meta">
+        <div class="idea-title">Berufsfeld-Analogien</div>
+        <div class="idea-sub">Praxisnahe Vergleiche nach Fachbereich</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Spezialisiert auf sieben verschiedene Analogieformate.</div></li>
+          <li><div class="sn">2</div><div>Passt Beispiele an das spezifische Berufsfeld der Lernenden an.</div></li>
+          <li><div class="sn">3</div><div>Nutzt drei Schwierigkeitsstufen zur Binnendifferenzierung.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Schließt Wissenslücken durch Aktivierung von Vorwissen und steigert die Lernmotivation durch Alltagsbezug.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/2dfb75f8-8f4b-447a-8ed1-581c82fa06e6?token=185f9b8bd414d19277653854b7265663" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div>Fobizz Workshop · KI-Bots Übersicht · Seite 1 / 2</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SEITE 2 — Bots 6-10
+     ══════════════════════════════ -->
+<div class="page">
+
+  <div class="pg-header">
+    <div class="pg-header-left">
+      <div class="super">Fobizz Workshop · BMS Winterthur · 07.04.2026</div>
+      <div class="title">KI-Bots Übersicht (Fortsetzung)</div>
+    </div>
+    <div class="pg-header-right">
+      <div class="shortlink-header"><span>Direktlinks:</span> to.fobizz.com/bots</div>
+      <div style="margin-top:1.5mm">Seite 2 / 2</div>
+    </div>
+  </div>
+
+  <!-- Bot 6 -->
+  <div class="idea v6">
+    <div class="idea-head">
+      <div class="idea-letter">6</div>
+      <div class="idea-meta">
+        <div class="idea-title">TeacherAnswers</div>
+        <div class="idea-sub">Differenzierte Musterlösungen</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Generiert Antworten auf drei Niveaus (Superficial, Good, Better).</div></li>
+          <li><div class="sn">2</div><div>Liefert didaktische Erklärungen und Strategien gegen Fehlvorstellungen.</div></li>
+          <li><div class="sn">3</div><div>Analysiert Aufgabenstellungen für passgenaue Rückmeldungen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Unterstützt Lehrpersonen bei der Erstellung von binnendifferenzierten Materialien und Feedback.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/b85cbe28-1fa4-4163-9f5a-7568cc4e1430?token=1dd9666a17bc0ddb1b347f0d899e2fa1" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot 7 -->
+  <div class="idea v1">
+    <div class="idea-head">
+      <div class="idea-letter">7</div>
+      <div class="idea-meta">
+        <div class="idea-title">AgentMaker</div>
+        <div class="idea-sub">Anleitung zum Bot-Bau</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Führt schrittweise durch die Planung eines eigenen CustomBots.</div></li>
+          <li><div class="sn">2</div><div>Erstellt eine strukturierte Instruktionsvorlage (Mega-Prompt).</div></li>
+          <li><div class="sn">3</div><div>Berücksichtigt Zielgruppe, Rolle und spezifisches Verhalten des Bots.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Ermöglicht es jedem, effektive und massgeschneiderte KI-Assistenten ohne Programmierkenntnisse zu erstellen.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/38689dee-2d93-4308-a115-6b3f12903601?token=0bfd11fc283cd106026800a429b9fac2" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot 8 -->
+  <div class="idea v2">
+    <div class="idea-head">
+      <div class="idea-letter">8</div>
+      <div class="idea-meta">
+        <div class="idea-title">Helpdesk Vertiefungsarbeit</div>
+        <div class="idea-sub">Projektbegleitung & Coaching</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Unterstützt bei der Themenfindung und Strukturierung von Projekten.</div></li>
+          <li><div class="sn">2</div><div>Nutzt Reflexionsfragen zur Förderung der Eigenständigkeit.</div></li>
+          <li><div class="sn">3</div><div>Bietet Hilfe zur Selbsthilfe statt fertiger Lösungen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Entlastet Lehrpersonen bei der Betreuung komplexer Arbeiten und stärkt die Problemlösekompetenz der Schüler.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/3c0d7d52-8bb6-465c-a66d-6501be02c7a0?token=147fb37e313536f04703aa6b9ebfb84d" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot 9 -->
+  <div class="idea v3">
+    <div class="idea-head">
+      <div class="idea-letter">9</div>
+      <div class="idea-meta">
+        <div class="idea-title">Missverständnis-Finder</div>
+        <div class="idea-sub">Fehlerkultur & Lernbarrieren</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Identifiziert typische Denkfehler in Fächern wie Informatik.</div></li>
+          <li><div class="sn">2</div><div>Schlägt didaktische Strategien zur Korrektur von Fehlvorstellungen vor.</div></li>
+          <li><div class="sn">3</div><div>Macht Lernbarrieren sichtbar, bevor sie sich verfestigen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Verbessert den Lernerfolg durch gezielte, proaktive Adressierung von Schüler-Fehlvorstellungen.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/99593e7f-9b1d-416f-b917-53eee34b2cbd?token=f99865b31f7b9781f7a3eba6230617cd" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot 10 -->
+  <div class="idea v4">
+    <div class="idea-head">
+      <div class="idea-letter">10</div>
+      <div class="idea-meta">
+        <div class="idea-title">Prompt-Wizard</div>
+        <div class="idea-sub">Vom Wunsch zum Mega-Prompt</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-col">
+        <div class="col-label">Funktion & Methode</div>
+        <ul class="col-steps">
+          <li><div class="sn">1</div><div>Optimiert einfache Anfragen in professionelle, strukturierte Prompts.</div></li>
+          <li><div class="sn">2</div><div>Nutzt Techniken wie Chain-of-Thought und Rollenzuweisungen.</div></li>
+          <li><div class="sn">3</div><div>Liefert sofort kopierbare und hochwirksame Anweisungen.</div></li>
+        </ul>
+      </div>
+      <div class="idea-col">
+        <div class="col-label">Einsatz & Ziel</div>
+        <div class="why-text">Steigert die Qualität der KI-Ergebnisse massiv durch Anwendung von Prompt-Engineering Best Practices.</div>
+        <div class="why-use">
+          <a href="https://app.fobizz.com/ai/chats/public_assistants/3c02ed40-3906-49a7-bf69-c0901f866464?token=5591f275202c825920a450abd4fb635a" target="_blank">🔗 Direkt ausprobieren</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reflection row page 2 -->
+  <div class="reflection">
+    <div class="reflection-label">Mein nächster Schritt</div>
+    <div class="refl-grid">
+      <div class="refl-item">
+        <div class="rl">Diesen Bot nutze ich zuerst:</div>
+        <div class="write-line"></div>
+      </div>
+      <div class="refl-item">
+        <div class="rl">In der Klasse / im Fach …</div>
+        <div class="write-line"></div>
+      </div>
+      <div class="refl-item">
+        <div class="rl">Meine Notizen / Link-Speicher</div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div>Fobizz Workshop · KI-Bots Übersicht · Seite 2 / 2</div>
+  </div>
+</div>
+
+</body>
+</html>

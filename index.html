@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fobizz Workshop · BMS Winterthur</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:#18181b;
+  --ink-2:#3f3f46;
+  --ink-3:#71717a;
+  --ink-4:#a1a1aa;
+  --border:#e4e4e7;
+  --border-2:#d4d4d8;
+  --surface:#fff;
+  --surface-2:#fafaf9;
+  --surface-3:#f4f4f5;
+  --accent:#9a2b30;
+  --accent-light:#fff1f2;
+  --accent-border:#fecdd3;
+  --accent-strong:#7f1d1d;
+  --accent-2:#0f766e;
+  --accent-2-light:#ecfeff;
+  --accent-2-border:#99f6e4;
+  --accent-2-strong:#134e4a;
+  --font:'DM Sans',sans-serif;
+  --serif:'Instrument Serif',serif;
+  --mono:'DM Mono',monospace;
+  --radius:8px;
+  --radius-lg:12px;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--surface-2);min-height:100vh;font-size:15px;line-height:1.6}
+
+/* ─── TOP STRIP ─── */
+.top-strip{
+  background:var(--accent);
+  color:#fff;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.04em;
+  padding:7px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.top-strip-right{opacity:.75;font-size:11px}
+
+/* ─── HERO ─── */
+.hero{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:36px 28px 0;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-60px;right:-80px;
+  width:320px;height:320px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(154,43,48,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{max-width:860px;margin:0 auto}
+.hero-kicker{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-kicker::before{content:'';display:block;width:20px;height:1.5px;background:var(--accent)}
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(28px,4vw,44px);
+  line-height:1.15;
+  color:var(--ink);
+  margin-bottom:10px;
+  font-weight:400;
+}
+.hero-title em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:14px;color:var(--ink-3);max-width:480px;line-height:1.65;margin-bottom:24px}
+
+/* ─── KEY QUESTION ─── */
+.key-q{
+  display:inline-block;
+  background:var(--accent-light);
+  border:1px solid var(--accent-border);
+  border-radius:var(--radius);
+  padding:10px 16px;
+  font-size:13.5px;
+  color:var(--accent);
+  font-weight:500;
+  margin-bottom:28px;
+  max-width:540px;
+  line-height:1.55;
+}
+.key-q span{font-style:italic;font-family:var(--serif);font-size:15px}
+
+/* ─── TIMELINE TABS ─── */
+.tab-nav{
+  display:flex;
+  gap:0;
+  border-bottom:1px solid var(--border);
+  margin-top:4px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 20px 14px;
+  font-size:13px;font-weight:500;
+  color:var(--ink-3);
+  border:none;border-bottom:2px solid transparent;
+  background:transparent;cursor:pointer;
+  white-space:nowrap;
+  transition:color .15s,border-color .15s;
+  margin-bottom:-1px;
+}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-num{
+  width:20px;height:20px;border-radius:50%;
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface-3);color:var(--ink-3);flex-shrink:0;
+  transition:background .15s,color .15s;
+}
+.tab-btn.active .tab-num{background:var(--accent);color:#fff}
+.tab-time{font-family:var(--mono);font-size:10px;color:var(--ink-4)}
+
+/* ─── MAIN LAYOUT ─── */
+.main{max-width:860px;margin:0 auto;padding:28px}
+
+/* ─── PANELS ─── */
+.panel{display:none}
+.panel.active{display:block}
+
+/* ─── SPLIT LAYOUT ─── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.split-wide{display:grid;grid-template-columns:3fr 2fr;gap:20px;align-items:start}
+
+/* ─── CARDS ─── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:18px 20px;
+}
+.card-label{
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-4);margin-bottom:10px;
+}
+.card-title{font-size:15px;font-weight:600;margin-bottom:6px;line-height:1.3}
+.card-body{font-size:13px;color:var(--ink-2);line-height:1.65}
+
+/* ─── ACCENT CARD ─── */
+.card-accent{
+  background:var(--accent-light);
+  border-color:var(--accent-border);
+}
+.card-accent .card-label{color:var(--accent)}
+.card-accent .card-body{color:var(--accent-strong)}
+
+.card-warm{
+  background:var(--accent-2-light);
+  border-color:var(--accent-2-border);
+}
+.card-warm .card-label{color:var(--accent-2)}
+.card-warm .card-body{color:var(--accent-2-strong)}
+
+/* ─── STEP LIST ─── */
+.step-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.step-list li{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:13px;line-height:1.6;color:var(--ink-2)}
+.snum{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+
+/* ─── FLOW CARDS (Showcase) ─── */
+.flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.flow-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:12px 14px;
+  position:relative;
+}
+.flow-card::before{
+  content:attr(data-letter);
+  font-family:var(--mono);font-size:28px;font-weight:500;
+  opacity:.08;position:absolute;top:6px;right:10px;line-height:1;
+  color:var(--ink);
+}
+.flow-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-bottom:8px}
+.flow-title{font-size:12.5px;font-weight:600;margin-bottom:4px;line-height:1.25}
+.flow-desc{font-size:11.5px;color:var(--ink-3);line-height:1.55}
+.flow-tag{
+  display:inline-block;margin-top:8px;
+  font-family:var(--mono);font-size:10px;
+  padding:2px 7px;border-radius:3px;
+  background:var(--accent-light);color:var(--accent);
+}
+
+/* ─── MATERIALS GRID ─── */
+.mat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+.mat-item{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:10px 12px;
+  background:var(--surface);
+}
+.mat-type{font-family:var(--mono);font-size:10px;color:var(--ink-4);margin-bottom:4px}
+.mat-name{font-size:12.5px;font-weight:600;line-height:1.35;color:var(--ink-2)}
+.mat-item.hot{border-color:var(--accent-border);background:var(--accent-light)}
+.mat-item.hot .mat-name{color:var(--accent)}
+
+/* ─── LEVEL PILLS ─── */
+.pill{
+  display:inline-block;font-size:10.5px;font-weight:600;
+  padding:2px 9px;border-radius:20px;font-family:var(--mono);
+}
+.pill-easy{background:var(--accent-light);color:var(--accent-strong);border:1px solid var(--accent-border)}
+.pill-mid{background:var(--accent-2-light);color:var(--accent-2-strong);border:1px solid var(--accent-2-border)}
+.pill-hard{background:#f0fdfa;color:#115e59;border:1px solid #99f6e4}
+
+/* ─── TASK ROWS ─── */
+.task-row{
+  display:grid;grid-template-columns:80px 1fr;gap:16px;
+  align-items:start;
+  padding:14px 0;
+  border-bottom:1px solid var(--border);
+}
+.task-row:last-child{border-bottom:none}
+.task-letter{
+  font-family:var(--serif);font-size:32px;
+  color:var(--accent);font-style:italic;line-height:1;
+  padding-top:2px;
+}
+.task-meta .task-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.task-meta .task-desc{font-size:12.5px;color:var(--ink-3);line-height:1.6;margin-bottom:6px}
+
+/* ─── CHECKLIST ─── */
+.check-list{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.check-list li{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:12.5px;line-height:1.55;color:var(--ink-2);
+}
+.cb{
+  width:15px;height:15px;border:1.5px solid var(--border-2);
+  border-radius:3px;flex-shrink:0;margin-top:1px;
+}
+
+/* ─── TIP BOX ─── */
+.tip{
+  display:flex;gap:10px;align-items:flex-start;
+  border-radius:var(--radius);
+  padding:10px 14px;
+  font-size:12.5px;line-height:1.6;
+  margin:12px 0;
+}
+.tip.green{background:var(--accent-light);border:1px solid var(--accent-border);color:var(--accent-strong)}
+.tip.amber{background:var(--accent-2-light);border:1px solid var(--accent-2-border);color:var(--accent-2-strong)}
+.tip-icon{flex-shrink:0;font-size:14px;margin-top:1px}
+
+/* ─── DIVIDER ─── */
+.rule{border:none;border-top:1px solid var(--border);margin:18px 0}
+
+/* ─── SECTION HEADING ─── */
+.sh{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;font-family:var(--mono)}
+
+/* ─── LERNZIELE ─── */
+.lz-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-2);line-height:1.6}
+.lz-icon{color:var(--accent);flex-shrink:0;margin-top:2px;font-size:14px}
+
+/* ─── CLOSING ACTIONS ─── */
+.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.action-card{
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px;text-align:center;background:var(--surface);
+}
+.action-num{
+  font-family:var(--serif);font-size:28px;color:var(--accent);
+  font-style:italic;line-height:1;margin-bottom:6px;
+}
+.action-q{font-size:12.5px;font-weight:600;margin-bottom:4px;color:var(--ink)}
+.action-hint{font-size:11.5px;color:var(--ink-3);line-height:1.5}
+
+/* ─── ANIMATIONS ─── */
+.panel.active .card,.panel.active .flow-card,.panel.active .task-row{
+  animation:fadeUp .2s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+</style>
+</head>
+<body>
+
+<div class="top-strip">
+  <span>Fobizz Workshop · BMS Winterthur · 07.04.2026 · Pietro Rossi</span>
+  <span class="top-strip-right">60 Minuten</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Workshop</div>
+    <h1 class="hero-title">Fobizz <em>im Einsatz</em><br>— für BMS-Lehrpersonen</h1>
+
+
+
+    <!-- TAB NAV -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="show('einstieg',this)">
+        <span class="tab-num">1</span>Einstieg<span class="tab-time">5'</span>
+      </button>
+      <button class="tab-btn" onclick="show('showcase',this)">
+        <span class="tab-num">2</span>Showcase<span class="tab-time">15'</span>
+      </button>
+      <button class="tab-btn" onclick="show('werkstatt',this)">
+        <span class="tab-num">3</span>Werkstatt<span class="tab-time">35'</span>
+      </button>
+      <button class="tab-btn" onclick="show('abschluss',this)">
+        <span class="tab-num">4</span>Abschluss<span class="tab-time">10'</span>
+      </button>
+    </nav>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ═══════════════════════════
+       PANEL 1 · EINSTIEG
+       ═══════════════════════════ -->
+  <div id="panel-einstieg" class="panel active">
+    <div class="split-wide">
+
+      <!-- Links: Rahmung -->
+      <div>
+
+
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-label">Was ist Fobizz?</div>
+          <div class="card-body">
+            Fobizz ist eine <strong>Autor/innen-Plattform mit KI-Werkzeugen</strong> — für Lehrpersonen und Lernende. Die zentrale Funktion: <strong>Lernräume</strong>, in denen du kontrollierst, was deine Klasse sieht und nutzt.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Vier Bereiche im Überblick</div>
+          <ul class="step-list">
+            <li><div class="snum">1</div><div><strong>KI Chat &amp; Assistenten</strong> — für dich und für Lernende</div></li>
+            <li><div class="snum">2</div><div><strong>KI Multimedia Tools</strong> — Transkript, Podcast, Bild</div></li>
+            <li><div class="snum">3</div><div><strong>Material anlegen</strong> — Pinnwand, Umfrage, QR-Code</div></li>
+            <li><div class="snum">4</div><div><strong>Lernräume</strong> — datenschutzkonform, ohne Schüler-Accounts</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Rechts: Umfrage + Lizenz -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card card-warm">
+          <div class="card-label">Umfrage</div>
+          <div class="card-body">
+            <img src="../downloads/bms_fobizz.png" alt="QR Code Umfrage" style="width:100%;max-width:180px;display:block;margin:0 auto 12px;border-radius:4px">
+            <a href="https://app.fobizz.com/surveys/surveys/366315c0-f4b1-4f53-81a2-1c9ade0e6a63/public_survey_result?token=91d291d24e520cfc5f8ca8c71297d511" target="_blank" style="font-size:11.5px;color:var(--accent-2);font-weight:600;text-decoration:none;display:block;text-align:center">→ Zu den Ergebnissen</a>
+          </div>
+        </div>
+
+
+
+        <div class="card">
+          <div class="card-label">Heutiger Ablauf</div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:5px;font-size:12.5px">
+              <div style="display:flex;justify-content:space-between"><span>Einstieg &amp; Umfrage</span><span style="font-family:var(--mono);color:var(--ink-4)">5'</span></div>
+              <div style="display:flex;justify-content:space-between"><span>Die vier Bereiche auf Fobizz</span><span style="font-family:var(--mono);color:var(--ink-4)">15'</span></div>
+              <div style="display:flex;justify-content:space-between;color:var(--accent);font-weight:500"><span>Werkstatt — selbst ausprobieren</span><span style="font-family:var(--mono)">35'</span></div>
+              <div style="display:flex;justify-content:space-between"><span>Plenum &amp; Transfer</span><span style="font-family:var(--mono);color:var(--ink-4)">10'</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       PANEL 2 · SHOWCASE
+       ═══════════════════════════ -->
+  <div id="panel-showcase" class="panel">
+    <div class="split-wide">
+
+      <!-- Links: der Workflow -->
+      <div>
+        <div class="sh">Roter Faden — ein Video, vier Nutzungsformen</div>
+        <div class="card card-accent" style="margin-bottom:14px">
+          <div class="card-label">Ausgangsmaterial</div>
+          <div class="card-body">YouTube-Video: <strong>Gasgesetze</strong> (Physik, BMS-Niveau)<br>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--accent)">Tools und KI → KI Multimedia Tools → Transkript erstellen</span></div>
+        </div>
+
+        <div class="flow-grid">
+          <div class="flow-card" data-letter="a">
+            <div class="flow-dot"></div>
+            <div class="flow-title">a · Transkript</div>
+            <div class="flow-desc">YouTube-Link → Transkript in Minuten. Basis für alles weitere.</div>
+          </div>
+          <div class="flow-card" data-letter="b">
+            <div class="flow-dot"></div>
+            <div class="flow-title">b · KI-Chat</div>
+            <div class="flow-desc">Transkript einladen → zusammenfassen, Lücken finden, Fragen stellen.</div>
+          </div>
+          <div class="flow-card" data-letter="c">
+            <div class="flow-dot"></div>
+            <div class="flow-title">c · Arbeitsblatt</div>
+            <div class="flow-desc">Transkript + Prompt → Verständnisfragen, Lösungsschlüssel.</div>
+          </div>
+          <div class="flow-card" data-letter="d">
+            <div class="flow-dot"></div>
+            <div class="flow-title">d · Bot</div>
+            <div class="flow-desc">Transkript als Wissensbasis → Assistent erklärt, fragt zurück.</div>
+          </div>
+        </div>
+
+        <div class="card card-accent" style="text-align:center;padding:28px 20px;margin-top:16px">
+          <div class="card-label">Direktlink zum Mitmachen / Download</div>
+          <div style="font-family:var(--serif);font-size:42px;color:var(--accent);font-style:italic;line-height:1;letter-spacing:-0.01em">
+            to.fobizz.com/bots
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Rechts: Klassenraum-Inhalte -->
+      <div>
+        <div class="sh">Im Klassenraum vorbereitet</div>
+
+        <div class="mat-grid" style="grid-template-columns:1fr">
+          <div class="mat-item hot">
+            <div class="mat-type">Starthilfe</div>
+            <div class="mat-name">AgentMaker-Bot → to.fobizz.com/AgentMaker</div>
+          </div>
+
+          <div class="mat-item">
+            <div class="mat-type">Tool-Empfehlung</div>
+            <a href="https://v10.downloadhelper.net/" target="_blank" class="mat-name" style="text-decoration:none;color:inherit">Video DownloadHelper (Audio-URLs extrahieren)</a>
+          </div>
+          <div class="mat-item">
+            <div class="mat-type">Aufgabenblätter</div>
+            <a href="arbeitsblätter.html" target="_blank" class="mat-name" style="text-decoration:none;color:inherit">A · B · C · D (Werkstatt)</a>
+          </div>
+          <div class="mat-item">
+            <div class="mat-type">Ideenblatt</div>
+            <a href="ideen-weiteres.html" target="_blank" class="mat-name" style="text-decoration:none;color:inherit">E · F · G · H · I · J (Impulse)</a>
+          </div>
+          <div class="mat-item">
+            <div class="mat-type">Botübersicht</div>
+            <a href="bots-uebersicht.html" target="_blank" class="mat-name" style="text-decoration:none;color:inherit">Spezialisierte Bots 1–10 (Lokal)</a>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       PANEL 3 · WERKSTATT
+       ═══════════════════════════ -->
+  <div id="panel-werkstatt" class="panel">
+    <div class="split">
+
+      <!-- Links: Aufgaben -->
+      <div>
+        <div class="sh">Deine Aufgabe — wähle einen Einstieg</div>
+
+        <div class="task-row">
+          <div class="task-letter">A</div>
+          <div class="task-meta">
+            <div class="task-title">Transkript &amp; Verständnisfragen</div>
+            <div class="task-desc">Audio oder Video transkribieren → per KI-Chat Fragen generieren. ~15 Min</div>
+            <div class="pill pill-easy" style="font-family:var(--mono);font-size:10px">→ Aufgabenblatt A</div>
+          </div>
+        </div>
+
+        <div class="task-row">
+          <div class="task-letter">B</div>
+          <div class="task-meta">
+            <div class="task-title">Podcast generieren</div>
+            <div class="task-desc">Thema wählen → KI Multimedia Tool → Skript + Audiofile. ~15 Min</div>
+            <div class="pill pill-mid" style="font-family:var(--mono);font-size:10px">→ Aufgabenblatt B</div>
+          </div>
+        </div>
+
+        <div class="task-row">
+          <div class="task-letter">C</div>
+          <div class="task-meta">
+            <div class="task-title">Lernraum erstellen</div>
+            <div class="task-desc">Lernraum anlegen, PDF herunterladen, Projekt + Tool hinzufügen. ~20 Min</div>
+            <div class="pill pill-mid" style="font-family:var(--mono);font-size:10px">→ Aufgabenblatt C</div>
+          </div>
+        </div>
+
+        <div class="task-row">
+          <div class="task-letter">D</div>
+          <div class="task-meta">
+            <div class="task-title">Bot konfigurieren</div>
+            <div class="task-desc">AgentMaker nutzen → eigenen KI-Assistenten bauen → teilen. ~25 Min</div>
+            <div class="pill pill-hard" style="font-family:var(--mono);font-size:10px">→ Aufgabenblatt D</div>
+          </div>
+        </div>
+
+        <div class="tip green" style="margin-top:4px">
+          <div class="tip-icon">💡</div>
+          <div>Schnell fertig? Weiter mit den <strong>Ideen E–J</strong> auf dem Ideenblatt. Besonders empfohlen: <strong>I</strong> (KI-Chat für LP-Arbeit) und <strong>J</strong> (Promptlabor erkunden).</div>
+        </div>
+      </div>
+
+      <!-- Rechts: Orientierung + Prompt-Vorlage -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+
+        <div class="card card-accent">
+          <div class="card-label">Für Aufgabe D — Bot-Konfiguration</div>
+          <div class="card-body" style="font-size:13px;line-height:1.6">
+            Nutze den <strong>AgentMaker</strong>, um die Instruktionen für deinen Bot zu erstellen. Er hilft dir dabei, Rolle und Wissen präzise zu definieren.
+          </div>
+          <div style="margin-top:12px;text-align:center">
+            <a href="https://to.fobizz.com/AgentMaker" target="_blank" style="display:block;padding:12px;background:var(--accent);color:#fff;border-radius:6px;text-decoration:none;font-family:var(--mono);font-size:13px;font-weight:600">to.fobizz.com/AgentMaker</a>
+          </div>
+          <div style="font-size:11.5px;color:var(--accent-strong);margin-top:12px;line-height:1.5">
+            <strong>Tipp:</strong> Keine eigene Idee? Lass dich von den <strong>Spezialisierten Bots</strong> inspirieren oder besuche das <strong>Prompt-Labor</strong> direkt auf der Fobizz-Startseite.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Spezialisierte Bots zum Remixen</div>
+          <div class="card-body" style="font-size:12px;line-height:1.7">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 12px">
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/a9ba8e29-9a12-4cda-9406-a8aa696743b4?token=8227439b86836c259d89876a2bca31d6" target="_blank" style="color:inherit;text-decoration:none"><strong>1</strong> Legal Mentor</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/1d39b7fe-b841-4bfc-bcdd-479095306fe3?token=0f7a90268147614edacbedd717a40b13" target="_blank" style="color:inherit;text-decoration:none"><strong>2</strong> Ethik-Dilemma</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/2aa09403-a9c8-4a1a-a4e4-a3e06d39065b?token=d0283c408e3f9d15ed01a9faceae29c0" target="_blank" style="color:inherit;text-decoration:none"><strong>3</strong> Kahoot-Tutor</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/0f8e7a1c-e76b-4d31-a5df-813cb085d702?token=b69d266c3323f026fbd27e2df6d12df1" target="_blank" style="color:inherit;text-decoration:none"><strong>4</strong> Analogien (Beruf)</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/2dfb75f8-8f4b-447a-8ed1-581c82fa06e6?token=185f9b8bd414d19277653854b7265663" target="_blank" style="color:inherit;text-decoration:none"><strong>5</strong> Berufs-Beispiele</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/b85cbe28-1fa4-4163-9f5a-7568cc4e1430?token=1dd9666a17bc0ddb1b347f0d899e2fa1" target="_blank" style="color:inherit;text-decoration:none"><strong>6</strong> TeacherAnswers</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/38689dee-2d93-4308-a115-6b3f12903601?token=0bfd11fc283cd106026800a429b9fac2" target="_blank" style="color:inherit;text-decoration:none"><strong>7</strong> AgentMaker</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/3c0d7d52-8bb6-465c-a66d-6501be02c7a0?token=147fb37e313536f04703aa6b9ebfb84d" target="_blank" style="color:inherit;text-decoration:none"><strong>8</strong> Helpdesk VA</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/99593e7f-9b1d-416f-b917-53eee34b2cbd?token=f99865b31f7b9781f7a3eba6230617cd" target="_blank" style="color:inherit;text-decoration:none"><strong>9</strong> Missverständnis</a>
+              <a href="https://app.fobizz.com/ai/chats/public_assistants/3c02ed40-3906-49a7-bf69-c0901f866464?token=5591f275202c825920a450abd4fb635a" target="_blank" style="color:inherit;text-decoration:none"><strong>10</strong> Prompt-Wizard</a>
+            </div>
+            <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px">
+              Alle Details: <a href="https://to.fobizz.com/bots" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:600">to.fobizz.com/bots</a>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       PANEL 4 · ABSCHLUSS
+       ═══════════════════════════ -->
+  <div id="panel-abschluss" class="panel">
+    <div class="split">
+
+      <!-- Links: Plenum-Fragen -->
+      <div>
+        <div class="sh">Plenum — 3 Fragen</div>
+
+        <div class="action-grid">
+          <div class="action-card">
+            <div class="action-num">1</div>
+            <div class="action-q">Was habe ich heute ausprobiert?</div>
+            <div class="action-hint">Wer möchte, zeigt kurz sein Ergebnis.</div>
+          </div>
+          <div class="action-card">
+            <div class="action-num">2</div>
+            <div class="action-q">Wo sehe ich Fobizz in meinem Fach?</div>
+            <div class="action-hint">Konkreter Unterrichtskontext benennen.</div>
+          </div>
+          <div class="action-card">
+            <div class="action-num">3</div>
+            <div class="action-q">Was fehlt mir noch?</div>
+            <div class="action-hint">Nächster Schritt — was, bis wann?</div>
+          </div>
+        </div>
+
+        <hr class="rule">
+
+        <div class="sh">Lernziele — was heute erreicht sein sollte</div>
+
+        <div class="lz-row"><div class="lz-icon">✓</div><div>Ich verstehe, dass die Ausgangsfrage für Digitalität eine pädagogisch-didaktische ist — nicht eine technische.</div></div>
+        <div class="lz-row"><div class="lz-icon">✓</div><div>Ich kenne die vier Schwerpunktbereiche von Fobizz und weiss, wo ich anfange.</div></div>
+        <div class="lz-row"><div class="lz-icon">✓</div><div>Ich habe mindestens eine Funktion selbst ausprobiert und auf mein Fach übertragen.</div></div>
+        <div class="lz-row"><div class="lz-icon">✓</div><div>Ich habe einen konkreten nächsten Schritt — und weiss, wo ich Unterstützung finde.</div></div>
+      </div>
+
+      <!-- Rechts: Checkliste + Ressourcen -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+
+        <div class="card">
+          <div class="card-label">Was nehme ich mit?</div>
+          <ul class="check-list">
+            <li><div class="cb"></div><div><a href="arbeitsblätter.html" target="_blank" style="color:inherit;text-decoration:none">Aufgabenblätter A–D</a></div></li>
+            <li><div class="cb"></div><div><a href="ideen-weiteres.html" target="_blank" style="color:inherit;text-decoration:none">Ideenblatt E–J</a></div></li>
+            <li><div class="cb"></div><div><a href="bots-uebersicht.html" target="_blank" style="color:inherit;text-decoration:none">Bot-Übersicht 1–10</a></div></li>
+            <li><div class="cb"></div><div>Link zu dieser Seite</div></li>
+            <li><div class="cb"></div><div>Mein fertiger Bot-Link</div></li>
+          </ul>
+        </div>
+
+
+
+        <div class="card">
+          <div class="card-label">Direktlinks</div>
+          <div style="display:flex;flex-direction:column;gap:5px;font-size:12px;font-family:var(--mono)">
+            <a href="arbeitsblätter.html" target="_blank" style="color:var(--accent);text-decoration:underline">Aufgabenblätter.html</a>
+            <a href="ideen-weiteres.html" target="_blank" style="color:var(--accent);text-decoration:underline">Ideen-Weiteres.html</a>
+            <a href="bots-uebersicht.html" target="_blank" style="color:var(--accent);text-decoration:underline">Bots-Uebersicht.html</a>
+            <hr style="border:none;border-top:1px solid var(--border);margin:4px 0">
+            <a href="https://to.fobizz.com/bots" target="_blank" style="color:var(--accent);text-decoration:none">to.fobizz.com/bots</a>
+            <a href="https://to.fobizz.com/AgentMaker" target="_blank" style="color:var(--accent);text-decoration:none">to.fobizz.com/AgentMaker</a>
+            <a href="https://app.fobizz.com" target="_blank" style="color:var(--accent);text-decoration:none">app.fobizz.com</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+function show(id, btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.hero').offsetHeight+32,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
